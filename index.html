@@ -941,9 +941,11 @@ function isUrlArabic(){
       updateHero();
     }
 
-    function updateHero(){
-      heroTrack.style.transform = `translateX(${-heroIndex * 100}%)`;
-    }
+ function updateHero(){
+  const dir = document.body.classList.contains("rtl") ? 1 : -1;
+  heroTrack.style.transform = `translateX(${dir * heroIndex * 100}%)`;
+}
+
 
     function prevHero(){
       heroIndex = (heroIndex - 1 + heroImages.length) % heroImages.length;
