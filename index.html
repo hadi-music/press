@@ -582,6 +582,12 @@
     max-width: 100%;
   }
 }
+    /* FORCE mobile to be 1 column no matter what */
+@media (max-width: 900px){
+  .grid{
+    grid-template-columns: 1fr !important;
+  }
+}
 
   </style>
 </head>
