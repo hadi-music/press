@@ -1,0 +1,1018 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Artist Press Page</title>
+  <meta name="description" content="Artist press page — bio, project context, discography, links, contact." />
+
+  <!-- Atlas Typewriter font -->
+  <link href="https://db.onlinewebfonts.com/c/46a06fcd50c89c8dd63fb197535acc7c?family=Atlas+Typewriter+Regular+Trial" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg: #f4f3ef;
+      --text: #1f1f1f;
+      --muted: #5f5f5f;
+      --line: rgba(0,0,0,0.12);
+      --accent: #1f1f1f;
+      --shadow: 0 18px 40px rgba(0,0,0,0.08);
+      --radius: 22px;
+      --max: 980px;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+
+    body{
+      margin:0;
+      background:
+        radial-gradient(900px 600px at 20% 10%, rgba(0,0,0,0.04), transparent 60%),
+        radial-gradient(900px 600px at 80% 20%, rgba(0,0,0,0.03), transparent 60%),
+        radial-gradient(900px 600px at 50% 90%, rgba(0,0,0,0.02), transparent 60%),
+        var(--bg);
+      color: var(--text);
+      font-family: "Atlas Typewriter Regular Trial",
+                   "Atlas Typewriter Regular",
+                   ui-monospace,
+                   SFMono-Regular,
+                   Menlo,
+                   Monaco,
+                   Consolas,
+                   "Liberation Mono",
+                   "Courier New",
+                   monospace;
+      letter-spacing: 0.2px;
+      line-height:1.45;
+    }
+
+    /* RTL MODE */
+    body.rtl{
+      direction: rtl;
+      text-align: right;
+    }
+    body.rtl ul{
+      padding-right: 18px;
+      padding-left: 0;
+    }
+
+    a{ color:var(--accent); text-decoration:none; }
+    a:hover{ text-decoration:underline; }
+
+    .wrap{
+      width:min(var(--max), calc(100% - 40px));
+      margin: 34px auto 70px auto;
+    }
+
+    /* ===== Print header (in-page, uses your font) ===== */
+    .printHeader{
+      display:none;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,0.85);
+      border-radius: 16px;
+      padding: 12px 14px;
+      margin-bottom: 14px;
+      gap:12px;
+      align-items:flex-end;
+      justify-content:space-between;
+      flex-wrap:wrap;
+    }
+    .phTitle{
+      font-size:13px;
+      letter-spacing:1.2px;
+      text-transform:uppercase;
+      font-weight:800;
+    }
+    body.rtl .phTitle{
+      text-transform:none;
+      letter-spacing:0.6px;
+      font-weight:900;
+    }
+    .phMeta{
+      margin-top:4px;
+      font-size:12px;
+      color:rgba(0,0,0,0.6);
+    }
+    .phUrl{
+      font-size:12px;
+      color:rgba(0,0,0,0.6);
+      word-break:break-all;
+    }
+    body.rtl .printHeader{
+      direction: rtl;
+      text-align: right;
+    }
+
+    /* Top bar */
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      gap:14px;
+      margin-bottom:18px;
+      flex-wrap:wrap;
+      align-items:flex-end;
+    }
+
+    .brand{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+
+    .brand .artist{
+      font-size: 34px;
+      font-weight: 800;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+    body.rtl .brand .artist{
+      text-transform:none;
+      letter-spacing: 0.2px;
+      font-weight: 900;
+    }
+
+    .brand .tag{
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      border:1px solid rgba(0,0,0,0.18);
+      background: rgba(255,255,255,0.92);
+      padding:10px 14px;
+      border-radius:999px;
+      font-size:13px;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.08);
+      cursor:pointer;
+      font-family: inherit;
+      color: var(--accent);
+    }
+
+    .dot{
+      width:8px;
+      height:8px;
+      border-radius:50%;
+      background:#000;
+      opacity:0.75;
+    }
+
+    /* ===== Hero (Carousel) ===== */
+    .hero{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,0.92);
+      border-radius:var(--radius);
+      overflow:hidden;
+      box-shadow:var(--shadow);
+    }
+
+    .heroMedia{
+      position:relative;
+      aspect-ratio:16/9;
+      overflow:hidden;
+      background:#000;
+    }
+
+    .heroTrack{
+      height:100%;
+      display:flex;
+      width:100%;
+      transform: translateX(0);
+      transition: transform 720ms cubic-bezier(.22,.8,.22,1); /* slightly slower + ease */
+      will-change: transform;
+    }
+
+    .heroSlide{
+      min-width:100%;
+      height:100%;
+      position:relative;
+    }
+
+    .heroSlide img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      user-select:none;
+      -webkit-user-drag:none;
+    }
+
+    .heroOverlay{
+      position:absolute;
+      inset:0;
+      background:linear-gradient(180deg, rgba(255,255,255,0), rgba(244,243,239,0.88));
+      pointer-events:none;
+      z-index:2;
+    }
+
+    .heroMeta{
+      position:absolute;
+      left:18px;
+      right:18px;
+      bottom:16px;
+      display:flex;
+      justify-content:space-between;
+      gap:18px;
+      align-items:flex-end;
+      flex-wrap:wrap;
+      z-index:3;
+    }
+
+    .heroTitle{
+      max-width:70%;
+    }
+
+    .heroTitle h1{
+      margin:0;
+      font-size:clamp(20px, 3vw, 32px);
+      letter-spacing:0.4px;
+    }
+
+    .heroTitle p{
+      margin:6px 0 0;
+      font-size:13px;
+      color:rgba(0,0,0,0.7);
+      max-width:65ch;
+    }
+
+    /* Minimal white + / − on the right side (no casing) */
+    .heroControls{
+      position:absolute;
+      top:14px;
+      right:14px;
+      display:flex;
+      gap:10px;
+      z-index:4;
+      pointer-events:auto;
+    }
+    body.rtl .heroControls{
+      right:auto;
+      left:14px;
+    }
+
+    .heroCtrlBtn{
+      border:0;
+      background: transparent;
+      color:#ffffff;
+      font-size: 34px; /* slightly bigger */
+      line-height: 1;
+      padding: 4px 8px;
+      cursor:pointer;
+      user-select:none;
+      text-shadow: 0 10px 22px rgba(0,0,0,0.45);
+      font-family: inherit;
+    }
+    .heroCtrlBtn:active{ transform: translateY(1px); }
+    .heroCtrlBtn:focus{
+      outline: 2px solid rgba(255,255,255,0.55);
+      outline-offset: 3px;
+      border-radius: 10px;
+    }
+
+    /* Grid */
+    .grid{
+      margin-top:18px;
+      display:grid;
+      grid-template-columns:1.15fr 0.85fr;
+      gap:14px;
+    }
+
+    @media(max-width:900px){
+      .grid{ grid-template-columns:1fr; }
+      .heroTitle{ max-width:100%; }
+    }
+
+    /* Cards */
+    .card{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,0.85);
+      border-radius:var(--radius);
+      padding:18px;
+      box-shadow:0 16px 40px rgba(0,0,0,0.06);
+    }
+
+    .card h2{
+      margin:0 0 8px;
+      font-size:13px;
+      letter-spacing:1.4px;
+      text-transform:uppercase;
+      color:rgba(0,0,0,0.7);
+      font-weight:700;
+    }
+    body.rtl .card h2{
+      text-transform:none;
+      letter-spacing:0.6px;
+      font-weight:900; /* Arabic titles bolder */
+      font-size:14px;
+    }
+
+    .card p{
+      margin:0;
+      font-size:14.5px;
+      line-height:1.55;
+      white-space:pre-line;
+    }
+
+    .divider{
+      height:1px;
+      background:var(--line);
+      margin:14px 0;
+    }
+
+    ul{
+      margin:10px 0 0 18px;
+      padding:0;
+      font-size:14.5px;
+    }
+    li{ margin:8px 0; }
+
+    /* Embed */
+    .embed{
+      border:1px solid var(--line);
+      border-radius:16px;
+      overflow:hidden;
+      background:rgba(0,0,0,0.02);
+    }
+
+    .embed iframe{
+      width:100%;
+      border:0;
+      display:block;
+    }
+
+    .embedNote{
+      padding:10px 12px;
+      font-size:12px;
+      color:rgba(0,0,0,0.6);
+      border-top:1px solid var(--line);
+    }
+
+    /* PDF row + buttons */
+    .pdfRow{
+      margin-top: 14px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .btnPdf{
+      border: 1px solid rgba(0,0,0,0.75);
+      background: #1f1f1f;
+      color: #f4f3ef;
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.18);
+      letter-spacing: 0.3px;
+      font-family: inherit;
+    }
+    .btnPdf:hover{ background:#141414; }
+    .btnPdf:active{ transform: translateY(1px); }
+    .btnPdf svg{ width:16px;height:16px;display:block; }
+
+    /* Footer */
+    .footer{
+      margin-top: 18px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,0.80);
+      border-radius:var(--radius);
+      padding:16px 18px;
+      box-shadow:0 16px 40px rgba(0,0,0,0.05);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      flex-wrap:wrap;
+      gap:12px;
+    }
+
+    .footerTitle{
+      font-size:12px;
+      color:rgba(0,0,0,0.65);
+      letter-spacing:1.2px;
+      text-transform:uppercase;
+      margin:0;
+      font-weight:700;
+    }
+    body.rtl .footerTitle{
+      text-transform:none;
+      letter-spacing:0.6px;
+      font-weight:900;
+    }
+
+    .footerLinks{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    .pill, .pillBtn{
+      border:1px solid rgba(0,0,0,0.18);
+      background: rgba(255,255,255,0.92);
+      padding:10px 12px;
+      border-radius:999px;
+      font-size:13px;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      white-space:nowrap;
+      cursor:pointer;
+      font-family: inherit;
+      color: var(--accent);
+    }
+
+    body.rtl .footer{ text-align:right; }
+
+    /* === PDF MODE: replace embed with printable link block === */
+    .pdfOnly{ display:none; }
+    body.pdfmode .noPdf{ display:none !important; }
+    body.pdfmode .pdfOnly{ display:block !important; }
+
+    .pdfLinkBlock{
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:12px;
+      background: rgba(0,0,0,0.02);
+      font-size: 13px;
+    }
+    .pdfLinkBlock .row{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      padding:8px 0;
+      border-bottom:1px solid rgba(0,0,0,0.08);
+      flex-wrap:wrap;
+    }
+    .pdfLinkBlock .row:last-child{ border-bottom:0; }
+    .pdfLinkBlock .k{
+      color:rgba(0,0,0,0.65);
+      text-transform:uppercase;
+      letter-spacing:1px;
+      font-size:11px;
+      font-weight:700;
+    }
+    body.rtl .pdfLinkBlock .k{
+      text-transform:none;
+      letter-spacing:0.6px;
+      font-weight:900;
+    }
+    .pdfLinkBlock .v{ word-break:break-all; }
+
+    /* ===== Contact modal ===== */
+    .modalBackdrop{
+      position:fixed;
+      inset:0;
+      background: rgba(0,0,0,0.22);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding: 18px;
+      z-index: 9999;
+    }
+    .modalBackdrop.open{ display:flex; }
+
+    .modal{
+      width: min(520px, 100%);
+      border: 1px solid rgba(0,0,0,0.18);
+      background: rgba(255,255,255,0.96);
+      border-radius: 18px;
+      box-shadow: 0 26px 70px rgba(0,0,0,0.18);
+      padding: 16px 16px 14px 16px;
+    }
+    .modalTop{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:10px;
+      margin-bottom: 10px;
+    }
+    .modalTitle{
+      margin:0;
+      font-size: 13px;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.72);
+      font-weight:800;
+    }
+    body.rtl .modalTitle{
+      text-transform:none;
+      letter-spacing:0.6px;
+      font-weight:900;
+    }
+    .modalClose{
+      border:0;
+      background: transparent;
+      cursor:pointer;
+      font-size: 20px;
+      line-height: 1;
+      padding: 6px 8px;
+      color: rgba(0,0,0,0.75);
+      font-family: inherit;
+    }
+    .modalBody{
+      border-top: 1px solid rgba(0,0,0,0.10);
+      padding-top: 12px;
+      font-size: 14.5px;
+      line-height: 1.6;
+      white-space: pre-line;
+    }
+    .modalBody .label{
+      color: rgba(0,0,0,0.60);
+      font-size: 12px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-weight:700;
+    }
+    body.rtl .modalBody .label{
+      text-transform:none;
+      letter-spacing:0.6px;
+      font-weight:900;
+    }
+    .modalRow{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      flex-wrap:wrap;
+    }
+    .modalRow:last-child{ border-bottom:0; }
+    .modalValue{ word-break: break-word; }
+
+    /* Print styles */
+    @media print{
+      body{ background:#fff !important; }
+      .topbar .actions{ display:none !important; }
+      .footer, .card, .hero{ box-shadow:none !important; }
+      .pdfRow{ display:none !important; }
+      .modalBackdrop{ display:none !important; }
+      a{ text-decoration:none !important; }
+      *{ -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .printHeader{ display:flex !important; }
+
+      /* print first slide only */
+      .heroControls{ display:none !important; }
+      .heroTrack{ transform:none !important; }
+      .heroSlide{ display:none !important; }
+      .heroSlide.isPrintFirst{ display:block !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+
+    <!-- In-page print header (shows only in print/PDF, in your font) -->
+    <div class="printHeader" aria-label="Print header">
+      <div class="phLeft">
+        <div class="phTitle" id="phTitle">Artist Press Page</div>
+        <div class="phMeta"><span id="phDate"></span> • <span id="phTime"></span></div>
+      </div>
+      <div class="phRight">
+        <span class="phUrl" id="phUrl"></span>
+      </div>
+    </div>
+
+    <div class="topbar">
+      <div class="brand">
+        <div class="artist" data-i18n="artistName">HADI</div>
+        <div class="tag" data-i18n="tag">Press Page • Lebanon / Global</div>
+      </div>
+
+      <div class="actions">
+        <button class="btn" type="button" onclick="toggleLang()">
+          <span class="dot"></span><span id="langBtn">عربي</span>
+        </button>
+      </div>
+    </div>
+
+    <section class="hero" aria-label="Hero carousel">
+      <div class="heroMedia" id="heroMedia">
+        <div class="heroControls noPdf" aria-label="Carousel controls">
+          <button class="heroCtrlBtn" id="heroPrev" type="button" aria-label="Previous image">−</button>
+          <button class="heroCtrlBtn" id="heroNext" type="button" aria-label="Next image">+</button>
+        </div>
+
+        <div class="heroTrack" id="heroTrack" aria-label="Carousel track"></div>
+
+        <div class="heroOverlay"></div>
+
+        <div class="heroMeta">
+          <div class="heroTitle">
+            <h1 data-i18n="projectTitle">Al Fam Wal Fakkayn / 2026</h1>
+            <p data-i18n="hook">An album about pressure, silence, and the moment speech becomes unavoidable</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="grid">
+      <section class="card">
+        <h2 data-i18n="bioTitle">Artist Bio</h2>
+        <p data-i18n="bioText">Hadi is a South-Lebanese-based artist and producer working across Arabic rap, experimental sound, and conceptual design. His work approaches music as a system rather than a performance, prioritizing structure, repetition, and long-form coherence over immediacy. Interested in anxiety and pressure as both subject and material, he builds projects that sit between documentation and transformation. His current work focuses on rethinking how Arabic music can function — sonically, visually, and structurally — without asking for permission.</p>
+
+        <div class="divider"></div>
+
+        <h2 data-i18n="aboutTitle">About the Project</h2>
+        <p data-i18n="aboutText" data-i18n-mode="html">
+          Al-Fam wal-Fakkayn is a conceptual Arabic rap album that examines war through jaw anatomy, using structure, repetition, and restraint to trace how pressure reshapes the voice.
+
+The core tension sits between voice and structure. The jaw appears not as a metaphor, but as a mechanism. Language is not presented as self-expression, but as labor — something the body performs under conditions it did not design.
+
+Rather than functioning as a collection of songs, the album operates as a system, where pressure, looping, and restraint function as method. Each track tests how much distortion meaning can tolerate before it begins to malfunction.
+
+Hadi is not trying to fit into the Arabic scene. He is trying to change how it behaves.
+If the music feels restrained, that’s intentional.
+If it feels obsessive, that’s accurate.
+If this sounds controlled, it’s because losing control would be less interesting.
+
+        </p>
+      </section>
+
+      <aside class="card">
+        <h2 data-i18n="listenTitle">Listen</h2>
+
+        <!-- WEB MODE: iframe -->
+        <div class="embed noPdf">
+          <iframe
+            style="border-radius:12px"
+            src="https://open.spotify.com/embed/artist/06HzbOxNs2Wy8v9WDlUjC1"
+            height="352"
+            loading="lazy">
+          </iframe>
+          <div class="embedNote" data-i18n="embedNote">Spotify artist profile.</div>
+        </div>
+
+        <!-- PDF MODE: printable links -->
+        <div class="pdfOnly pdfLinkBlock" aria-label="Printable links">
+          <div class="row">
+            <div class="k">Spotify</div>
+            <div class="v">open.spotify.com/artist/06HzbOxNs2Wy8v9WDlUjC1</div>
+          </div>
+          <div class="row">
+            <div class="k">YouTube</div>
+            <div class="v">youtube.com/@doctororgans</div>
+          </div>
+          <div class="row">
+            <div class="k">Instagram</div>
+            <div class="v">instagram.com/doctororgans</div>
+          </div>
+          <div class="row">
+            <div class="k">Contact</div>
+            <div class="v">hadi_mroueh@yahoo.com</div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <h2 data-i18n="discographyTitle">Selected Discography</h2>
+        <ul>
+          <li><strong data-i18n="discCurrentLabel">Al Fam Wal Fakkayn</strong> — <span data-i18n="discCurrentYear">2026</span></li>
+          <li><span data-i18n="discPrev1">Al Sawt</span> — <span data-i18n="discPrev1Year">2025</span></li>
+          <li><span data-i18n="discPrev2">Al Sadd 8</span> — <span data-i18n="discPrev2Year">2023</span></li>
+        </ul>
+
+        <!-- Export PDFs + EPK ZIP (auto-switches by language) -->
+        <div class="pdfRow">
+          <button class="btnPdf" type="button" onclick="exportPDF('en')" aria-label="Export English PDF" title="Export English PDF (Save as PDF in dialog)">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path fill="currentColor"
+                d="M12.2 3.2c.6 0 1 .5.9 1.1-.4 2.2-1.2 4.5-2.3 6.6 1.7.6 3.4 1.3 5 2.2.6.3.7 1.1.3 1.6-.3.5-1 .7-1.6.4-1.6-.9-3.3-1.7-5.1-2.3-1.1 1.7-2.4 3.2-4 4.5-.5.4-1.2.3-1.6-.2-.4-.5-.3-1.2.2-1.6 1.4-1.1 2.6-2.5 3.6-4.0-1.4-.4-2.8-.6-4.3-.7-.6 0-1.1-.5-1.1-1.1s.5-1.1 1.1-1.1c1.8.1 3.5.4 5.1.9 1-2 1.7-4.1 2.1-6.2.1-.5.5-.9 1-.9z"/>
+            </svg>
+            <span>PDF (EN)</span>
+          </button>
+
+          <button class="btnPdf" type="button" onclick="exportPDF('ar')" aria-label="Export Arabic PDF" title="Export Arabic PDF (Save as PDF in dialog)">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path fill="currentColor"
+                d="M12.2 3.2c.6 0 1 .5.9 1.1-.4 2.2-1.2 4.5-2.3 6.6 1.7.6 3.4 1.3 5 2.2.6.3.7 1.1.3 1.6-.3.5-1 .7-1.6.4-1.6-.9-3.3-1.7-5.1-2.3-1.1 1.7-2.4 3.2-4 4.5-.5.4-1.2.3-1.6-.2-.4-.5-.3-1.2.2-1.6 1.4-1.1 2.6-2.5 3.6-4.0-1.4-.4-2.8-.6-4.3-.7-.6 0-1.1-.5-1.1-1.1s.5-1.1 1.1-1.1c1.8.1 3.5.4 5.1.9 1-2 1.7-4.1 2.1-6.2.1-.5.5-.9 1-.9z"/>
+            </svg>
+            <span>PDF (AR)</span>
+          </button>
+
+          <!-- EPK ZIP download (auto switches EN/AR) -->
+          <a class="btnPdf" id="epkDownload" href="downloads/HADI_EPK_EN_2025.zip" download>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path fill="currentColor" d="M12 3v10.2l3.6-3.6 1.4 1.4L12 17 7 11l1.4-1.4L12 13.2V3z"/>
+              <path fill="currentColor" d="M5 19h14v2H5z"/>
+            </svg>
+            <span data-i18n="epkLabel">EPK (.zip)</span>
+          </a>
+        </div>
+      </aside>
+    </div>
+
+    <footer class="footer" aria-label="Footer links">
+      <p class="footerTitle" data-i18n="footerTitle">Links</p>
+      <div class="footerLinks">
+        <a class="pill" href="https://open.spotify.com/artist/06HzbOxNs2Wy8v9WDlUjC1?si=hWgJXSlBS0K7MvMQ2Kl4Tw" target="_blank" rel="noopener" data-i18n="footerStreaming">Streaming</a>
+        <a class="pill" href="https://www.youtube.com/@doctororgans" target="_blank" rel="noopener" data-i18n="footerYouTube">YouTube</a>
+        <a class="pill" href="https://www.instagram.com/doctororgans/" target="_blank" rel="noopener" data-i18n="footerInstagram">Instagram</a>
+        <button class="pillBtn" type="button" onclick="openContact()" data-i18n="footerContact">Contact</button>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Contact Modal -->
+  <div class="modalBackdrop" id="contactModal" role="dialog" aria-modal="true" aria-label="Contact">
+    <div class="modal">
+      <div class="modalTop">
+        <p class="modalTitle" data-i18n="contactTitle">Contact</p>
+        <button class="modalClose" type="button" aria-label="Close" onclick="closeContact()">×</button>
+      </div>
+
+      <div class="modalBody">
+        <div class="modalRow">
+          <div class="label" data-i18n="contactEmailLabel">Email</div>
+          <div class="modalValue"><a href="mailto:hadi_mroueh@yahoo.com">hadi_mroueh@yahoo.com</a></div>
+        </div>
+        <div class="modalRow">
+          <div class="label" data-i18n="contactMgmtLabel">MGMT</div>
+          <div class="modalValue"><a href="mailto:effy@yatazamkan.com">effy@yatazamkan.com</a></div>
+        </div>
+        <div class="modalRow">
+          <div class="label" data-i18n="contactMobileLabel">Mobile</div>
+          <div class="modalValue"><a href="tel:+96171365340">+961 71 365 340</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // =========================================================
+    // 1) i18n: English is canonical in HTML; JS only overrides Arabic
+    // 2) Deep-link: /ar (and keeps URL synced)
+    // 3) Auto-detect: if no /ar, use browser language
+    // 4) EPK ZIP: auto switches EN/AR download link
+    // =========================================================
+
+    let lang = "en";
+
+    // Arabic overrides ONLY
+   const ar = {
+  artistName: "هادي",
+  tag: "صفحة صحفية • لبنان / عالمي",
+  projectTitle: "الفم والفكّين / ٢٠٢٦",
+  hook: "ألبوم عن الضغط، والصمت، واللحظة التي يفرض فيها الكلام نفسه",
+  bioTitle: "نبذة عن الفنان",
+  bioText: "هادي فنان ومنتج موسيقي من جنوب لبنان، يتميّز بإتقان عالٍ للغة العربية وبأسلوب خاص في موسيقى الراب. يعمل خارج منطق الإصدارات المتسارعة والأطر الموسيقية الجاهزة، وطوّر صوتًا يرتكز على البنية، واللغة، والانضباط الفني. رغم قلّة إصداراته، تحظى أعماله بمتابعة مستمرة داخل المشهد الموسيقي، ما رسّخ حضوره بين الفنانين أنفسهم. يُنظر إلى إصداره عام 2018 السدّ 8 كمرجع أساسي في المشهد البديل. إلى جانب أعماله المسجّلة، يُعرف هادي بعروضه الحيّة التي تنقل هذا النهج إلى حضور جسدي محسوب. يعمل حاليًا على تطوير مشروعه الفم والفكّين، الذي يوسّع ممارسته عبر الصوت واللغة والبنية البصرية",
+  aboutTitle: "عن المشروع",
+  aboutText: "الفم والفكّين ألبوم راب عربي ينطلق من بنية الفكّ لقراءة الحرب عبر الصوت. يعتمد العمل على البنية والتكرار والانضباط، ويقوم على توتّر أساسي بين الصوت والبنية. يظهر الفكّ هنا كآلية لا كاستعارة — آلية للنطق، والضغط، والضبط. تُعامل اللغة هنا لا كمساحة تعبير، بل كفعل جسدي، كعمل يُؤدَّى تحت شروط لم يخترها الجسد.<br><br>بدل أن يكون مجموعة أغانٍ منفصلة، يعمل الألبوم كنظام متكامل، حيث يُستخدم الضغط والتكرار كطريقة عمل. يختبر كل مسار مقدار التحوّل الذي يمكن للمعنى احتماله قبل أن يبدأ بفقدان تماسكه.<br><br>هادي لا يسعى للاندماج في المشهد العربي.<br>بل يسعى إلى تغيير طريقة عمله.<br>إذا بدا العمل منضبطًا، فذلك مقصود.<br>وإذا بدا هاجسيًا، فذلك دقيق.",
+  listenTitle: "استمع",
+  embedNote: "الملف الفني على سبوتيفاي.",
+  discographyTitle: "أعمال مختارة",
+  discCurrentLabel: "الفم والفكّين",
+  discCurrentYear: "٢٠٢٦",
+  discPrev1: "الصوت",
+  discPrev1Year: "٢٠٢٥",
+  discPrev2: "السدّ ٨",
+  discPrev2Year: "٢٠٢٣",
+  footerTitle: "روابط",
+  footerStreaming: "استماع",
+  footerYouTube: "يوتيوب",
+  footerInstagram: "إنستغرام",
+  footerContact: "تواصل",
+  contactTitle: "تواصل",
+  contactEmailLabel: "إيميل",
+  contactMgmtLabel: "إدارة",
+  contactMobileLabel: "هاتف",
+  epkLabel: "EPK (.zip)",
+};
+
+
+    // Store original English from DOM once (prevents drift forever)
+    const originalEN = {};
+    document.querySelectorAll("[data-i18n]").forEach(el => {
+      const key = el.getAttribute("data-i18n");
+      const mode = el.getAttribute("data-i18n-mode") || "text";
+      originalEN[key] = (mode === "html") ? el.innerHTML : el.textContent;
+    });
+
+    function getBasePath(){
+      const p = window.location.pathname;
+      return p.replace(/\/ar\/?$/i, "/");
+    }
+
+    function setUrlForLang(targetLang){
+      const base = getBasePath();
+      const newPath = (targetLang === "ar") ? (base.replace(/\/$/,"") + "/ar") : base.replace(/\/$/,"");
+      try{
+        window.history.replaceState({}, "", newPath + window.location.search + window.location.hash);
+      }catch(_e){
+        window.location.hash = (targetLang === "ar") ? "#ar" : "";
+      }
+    }
+
+    function isUrlArabic(){
+      const p = window.location.pathname.toLowerCase();
+      const h = window.location.hash.toLowerCase();
+      return p.endsWith("/ar") || p.endsWith("/ar/") || h === "#ar";
+    }
+
+    // ---- EPK ZIP link switching (EN vs AR) ----
+    function updateEPKLink(){
+      const link = document.getElementById("epkDownload");
+      if (!link) return;
+      link.href = (lang === "ar")
+        ? "downloads/HADI_EPK_AR_2025.zip"
+        : "downloads/HADI_EPK_EN_2025.zip";
+    }
+
+    function applyLang(newLang, {syncUrl=true} = {}){
+      lang = newLang;
+      document.documentElement.lang = lang;
+      document.body.classList.toggle("rtl", lang === "ar");
+      document.getElementById("langBtn").textContent = lang === "ar" ? "EN" : "عربي";
+
+      document.querySelectorAll("[data-i18n]").forEach(el=>{
+        const key = el.getAttribute("data-i18n");
+        const mode = el.getAttribute("data-i18n-mode") || "text";
+
+        if (lang === "ar" && typeof ar[key] !== "undefined"){
+          if (mode === "html") el.innerHTML = ar[key];
+          else el.textContent = ar[key];
+        } else {
+          if (mode === "html") el.innerHTML = originalEN[key] ?? "";
+          else el.textContent = originalEN[key] ?? "";
+        }
+      });
+
+      if (syncUrl) setUrlForLang(lang);
+
+      updateEPKLink();
+      initPrintHeader();
+    }
+
+    function toggleLang(){
+      applyLang(lang === "en" ? "ar" : "en", {syncUrl:true});
+    }
+
+    function initLanguage(){
+      if (isUrlArabic()){
+        applyLang("ar", {syncUrl:false});
+        return;
+      }
+      const navLang = (navigator.language || "").toLowerCase();
+      if (navLang.startsWith("ar")){
+        applyLang("ar", {syncUrl:true});
+      } else {
+        applyLang("en", {syncUrl:false});
+      }
+    }
+
+    window.addEventListener("popstate", () => {
+      applyLang(isUrlArabic() ? "ar" : "en", {syncUrl:false});
+    });
+
+    // ===== Print header content (date/time/url) =====
+    function initPrintHeader(){
+      const now = new Date();
+      const pad = (n)=> String(n).padStart(2,"0");
+      const hours = now.getHours();
+      const h12 = hours % 12 || 12;
+      const ampm = hours >= 12 ? "PM" : "AM";
+
+      const dateStr = `${pad(now.getMonth()+1)}/${pad(now.getDate())}/${String(now.getFullYear()).slice(-2)}`;
+      const timeStr = `${h12}:${pad(now.getMinutes())} ${ampm}`;
+
+      const d = document.getElementById("phDate");
+      const t = document.getElementById("phTime");
+      const u = document.getElementById("phUrl");
+      const title = document.getElementById("phTitle");
+
+      if (d) d.textContent = dateStr;
+      if (t) t.textContent = timeStr;
+      if (u) u.textContent = window.location.href.replace(/^https?:\/\//,'');
+      if (title) title.textContent = (lang === "ar") ? "صفحة صحفية" : "Artist Press Page";
+    }
+
+    // ===== Hero carousel =====
+    const heroImages = [
+      "images/Hero.png",
+      "images/Hero2.png",
+      "images/Hero3.png"
+    ];
+
+    const heroTrack = document.getElementById("heroTrack");
+    let heroIndex = 0;
+
+    function buildHeroSlides(){
+      heroTrack.innerHTML = "";
+      heroImages.forEach((src, idx) => {
+        const slide = document.createElement("div");
+        slide.className = "heroSlide" + (idx === 0 ? " isPrintFirst" : "");
+        const img = document.createElement("img");
+        img.src = src;
+        img.alt = `Hero image ${idx + 1}`;
+        slide.appendChild(img);
+        heroTrack.appendChild(slide);
+      });
+      updateHero();
+    }
+
+    function updateHero(){
+      heroTrack.style.transform = `translateX(${-heroIndex * 100}%)`;
+    }
+
+    function prevHero(){
+      heroIndex = (heroIndex - 1 + heroImages.length) % heroImages.length;
+      updateHero();
+    }
+
+    function nextHero(){
+      heroIndex = (heroIndex + 1) % heroImages.length;
+      updateHero();
+    }
+
+    document.getElementById("heroPrev")?.addEventListener("click", prevHero);
+    document.getElementById("heroNext")?.addEventListener("click", nextHero);
+
+    // Touch swipe
+    const heroMedia = document.getElementById("heroMedia");
+    let startX = null;
+
+    heroMedia.addEventListener("touchstart", (e) => {
+      if (!e.touches || e.touches.length !== 1) return;
+      startX = e.touches[0].clientX;
+    }, { passive:true });
+
+    heroMedia.addEventListener("touchend", (e) => {
+      if (startX === null) return;
+      const endX = (e.changedTouches && e.changedTouches[0]) ? e.changedTouches[0].clientX : startX;
+      const dx = endX - startX;
+      const threshold = 45;
+
+      if (dx > threshold) prevHero();
+      if (dx < -threshold) nextHero();
+
+      startX = null;
+    });
+
+    buildHeroSlides();
+
+    // ===== PDF Export (print) =====
+    function exportPDF(targetLang){
+      const previousLang = lang;
+
+      applyLang(targetLang, {syncUrl:false});
+      document.body.classList.add("pdfmode");
+      initPrintHeader();
+
+      const oldTitle = document.title;
+      document.title = (targetLang === "ar") ? "Press Page - AR" : "Press Page - EN";
+
+      setTimeout(() => {
+        window.print();
+
+        setTimeout(() => {
+          document.body.classList.remove("pdfmode");
+          document.title = oldTitle;
+          applyLang(previousLang, {syncUrl:false});
+        }, 500);
+      }, 160);
+    }
+
+    window.addEventListener("afterprint", () => {
+      document.body.classList.remove("pdfmode");
+    });
+
+    // ===== Contact modal =====
+    const modal = document.getElementById("contactModal");
+
+    function openContact(){
+      modal.classList.add("open");
+      setTimeout(() => modal.querySelector(".modalClose")?.focus(), 0);
+    }
+
+    function closeContact(){
+      modal.classList.remove("open");
+    }
+
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) closeContact();
+    });
+
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && modal.classList.contains("open")) closeContact();
+    });
+
+    // Boot
+    initLanguage();
+    initPrintHeader();
+    updateEPKLink();
+  </script>
+</body>
+</html>
