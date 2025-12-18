@@ -163,7 +163,7 @@
       height:8px;
       border-radius:50%;
       background:#31be19;
-      opacity:0.75;
+      opacity:0.85;
     }
 
     /* ===== Hero (Carousel) ===== */
@@ -180,6 +180,8 @@
       aspect-ratio:16/9;
       overflow:hidden;
       background:#000;
+      /* IMPORTANT: keep carousel geometry LTR even when page is RTL */
+      direction:ltr;
     }
 
     .heroTrack{
@@ -189,10 +191,8 @@
       transform: translateX(0);
       transition: transform 720ms cubic-bezier(.22,.8,.22,1); /* slightly slower + ease */
       will-change: transform;
+      direction:ltr; /* IMPORTANT */
     }
-    body.rtl .heroTrack{
-  flex-direction: row-reverse;
-}
 
     .heroSlide{
       min-width:100%;
@@ -247,7 +247,7 @@
       max-width:65ch;
     }
 
-    /* Minimal white + / − on the right side (no casing) */
+    /* Minimal white + / − on the right side */
     .heroControls{
       position:absolute;
       top:14px;
@@ -266,7 +266,7 @@
       border:0;
       background: transparent;
       color:#ffffff;
-      font-size: 34px; /* slightly bigger */
+      font-size: 34px;
       line-height: 1;
       padding: 4px 8px;
       cursor:pointer;
@@ -290,10 +290,8 @@
     }
 
     @media (min-width: 901px){
-  .heroTitle p{
-    white-space: nowrap;
-  }
-}
+      .heroTitle p{ white-space: nowrap; }
+    }
 
     /* Cards */
     .card{
@@ -315,7 +313,7 @@
     body.rtl .card h2{
       text-transform:none;
       letter-spacing:0.6px;
-      font-weight:900; /* Arabic titles bolder */
+      font-weight:900;
       font-size:14px;
     }
 
@@ -572,26 +570,24 @@
       .heroSlide{ display:none !important; }
       .heroSlide.isPrintFirst{ display:block !important; }
     }
+
     /* ===== Mobile hero typography tuning ===== */
-@media (max-width: 600px){
-  .heroTitle h1{
-    font-size: 16px; /* down from clamp */
-    letter-spacing: 0.2px;
-  }
+    @media (max-width: 600px){
+      .heroTitle h1{
+        font-size: 16px;
+        letter-spacing: 0.2px;
+      }
+      .heroTitle p{
+        font-size: 10px;
+        line-height: 1.45;
+        max-width: 100%;
+      }
+    }
 
-  .heroTitle p{
-    font-size: 10px;
-    line-height: 1.45;
-    max-width: 100%;
-  }
-}
     /* FORCE mobile to be 1 column no matter what */
-@media (max-width: 900px){
-  .grid{
-    grid-template-columns: 1fr !important;
-  }
-}
-
+    @media (max-width: 900px){
+      .grid{ grid-template-columns: 1fr !important; }
+    }
   </style>
 </head>
 
@@ -661,7 +657,6 @@ Hadi is not trying to fit into the Arabic scene. He is trying to change how it b
 If the music feels restrained, that’s intentional.
 If it feels obsessive, that’s accurate.
 If this sounds controlled, it’s because losing control would be less interesting.
-
         </p>
       </section>
 
@@ -708,7 +703,7 @@ If this sounds controlled, it’s because losing control would be less interesti
           <li><span data-i18n="discPrev2">Al Sadd 8</span> — <span data-i18n="discPrev2Year">2023</span></li>
         </ul>
 
-        <!-- Export PDFs + EPK ZIP (auto-switches by language) -->
+        <!-- Export PDFs + EPK ZIP -->
         <div class="pdfRow">
           <button class="btnPdf" type="button" onclick="exportPDF('en')" aria-label="Export English PDF" title="Export English PDF (Save as PDF in dialog)">
             <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -726,7 +721,6 @@ If this sounds controlled, it’s because losing control would be less interesti
             <span>PDF (AR)</span>
           </button>
 
-          <!-- EPK ZIP download (auto switches EN/AR) -->
           <a class="btnPdf" id="epkDownload" href="downloads/HADI_EPK_EN_2025.zip" download>
             <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
               <path fill="currentColor" d="M12 3v10.2l3.6-3.6 1.4 1.4L12 17 7 11l1.4-1.4L12 13.2V3z"/>
@@ -776,46 +770,38 @@ If this sounds controlled, it’s because losing control would be less interesti
   </div>
 
   <script>
-    // =========================================================
-    // 1) i18n: English is canonical in HTML; JS only overrides Arabic
-    // 2) Deep-link: /ar (and keeps URL synced)
-    // 3) Auto-detect: if no /ar, use browser language
-    // 4) EPK ZIP: auto switches EN/AR download link
-    // =========================================================
-
     let lang = "en";
 
     // Arabic overrides ONLY
-   const ar = {
-  artistName: "هادي",
-  tag: "صفحة صحفية • لبنان / عالمي",
-  projectTitle: "الفم والفكّين / ٢٠٢٦",
-  hook: "ألبوم عن الضغط، والصمت، واللحظة التي يفرض فيها الكلام نفسه",
-  bioTitle: "نبذة عن الفنان",
-  bioText: "هادي فنان ومنتج موسيقي من جنوب لبنان، يتميّز بإتقان عالٍ للغة العربية وبأسلوب خاص في موسيقى الراب. يعمل خارج منطق الإصدارات المتسارعة والأطر الموسيقية الجاهزة، وطوّر صوتًا يرتكز على البنية، واللغة، والانضباط الفني. رغم قلّة إصداراته، تحظى أعماله بمتابعة مستمرة داخل المشهد الموسيقي، ما رسّخ حضوره بين الفنانين أنفسهم. يُنظر إلى إصداره عام 2023 السدّ 8 كمرجع أساسي في المشهد البديل. إلى جانب أعماله المسجّلة، يُعرف هادي بعروضه الحيّة التي تنقل هذا النهج إلى حضور جسدي محسوب. يعمل حاليًا على تطوير مشروعه الفم والفكّين، الذي يوسّع ممارسته عبر الصوت واللغة والبنية البصرية",
-  aboutTitle: "عن المشروع",
-  aboutText: "الفم والفكّين ألبوم راب عربي ينطلق من بنية الفكّ لقراءة الحرب عبر الصوت. يعتمد العمل على البنية والتكرار والانضباط، ويقوم على توتّر أساسي بين الصوت والبنية. يظهر الفكّ هنا كآلية لا كاستعارة — آلية للنطق، والضغط، والضبط. تُعامل اللغة هنا لا كمساحة تعبير، بل كفعل جسدي، كعمل يُؤدَّى تحت شروط لم يخترها الجسد.<br><br>بدل أن يكون مجموعة أغانٍ منفصلة، يعمل الألبوم كنظام متكامل، حيث يُستخدم الضغط والتكرار كطريقة عمل. يختبر كل مسار مقدار التحوّل الذي يمكن للمعنى احتماله قبل أن يبدأ بفقدان تماسكه.<br><br>هادي لا يسعى للاندماج في المشهد العربي.<br>بل يسعى إلى تغيير طريقة عمله.<br>إذا بدا العمل منضبطًا، فذلك مقصود.<br>وإذا بدا هاجسيًا، فذلك دقيق.",
-  listenTitle: "استمع",
-  embedNote: "الملف الفني على سبوتيفاي.",
-  discographyTitle: "أعمال مختارة",
-  discCurrentLabel: "الفم والفكّين",
-  discCurrentYear: "٢٠٢٦",
-  discPrev1: "الصوت",
-  discPrev1Year: "٢٠٢٥",
-  discPrev2: "السدّ ٨",
-  discPrev2Year: "٢٠٢٣",
-  footerTitle: "روابط",
-  footerStreaming: "استماع",
-  footerYouTube: "يوتيوب",
-  footerInstagram: "إنستغرام",
-  footerContact: "تواصل",
-  contactTitle: "تواصل",
-  contactEmailLabel: "إيميل",
-  contactMgmtLabel: "إدارة",
-  contactMobileLabel: "هاتف",
-  epkLabel: "EPK (.zip)",
-};
-
+    const ar = {
+      artistName: "هادي",
+      tag: "صفحة صحفية • لبنان / عالمي",
+      projectTitle: "الفم والفكّين / ٢٠٢٦",
+      hook: "ألبوم عن الضغط، والصمت، واللحظة التي يفرض فيها الكلام نفسه",
+      bioTitle: "نبذة عن الفنان",
+      bioText: "هادي فنان ومنتج موسيقي من جنوب لبنان، يتميّز بإتقان عالٍ للغة العربية وبأسلوب خاص في موسيقى الراب. يعمل خارج منطق الإصدارات المتسارعة والأطر الموسيقية الجاهزة، وطوّر صوتًا يرتكز على البنية، واللغة، والانضباط الفني. رغم قلّة إصداراته، تحظى أعماله بمتابعة مستمرة داخل المشهد الموسيقي، ما رسّخ حضوره بين الفنانين أنفسهم. يُنظر إلى إصداره عام 2023 السدّ 8 كمرجع أساسي في المشهد البديل. إلى جانب أعماله المسجّلة، يُعرف هادي بعروضه الحيّة التي تنقل هذا النهج إلى حضور جسدي محسوب. يعمل حاليًا على تطوير مشروعه الفم والفكّين، الذي يوسّع ممارسته عبر الصوت واللغة والبنية البصرية",
+      aboutTitle: "عن المشروع",
+      aboutText: "الفم والفكّين ألبوم راب عربي ينطلق من بنية الفكّ لقراءة الحرب عبر الصوت. يعتمد العمل على البنية والتكرار والانضباط، ويقوم على توتّر أساسي بين الصوت والبنية. يظهر الفكّ هنا كآلية لا كاستعارة — آلية للنطق، والضغط، والضبط. تُعامل اللغة هنا لا كمساحة تعبير، بل كفعل جسدي، كعمل يُؤدَّى تحت شروط لم يخترها الجسد.<br><br>بدل أن يكون مجموعة أغانٍ منفصلة، يعمل الألبوم كنظام متكامل، حيث يُستخدم الضغط والتكرار كطريقة عمل. يختبر كل مسار مقدار التحوّل الذي يمكن للمعنى احتماله قبل أن يبدأ بفقدان تماسكه.<br><br>هادي لا يسعى للاندماج في المشهد العربي.<br>بل يسعى إلى تغيير طريقة عمله.<br>إذا بدا العمل منضبطًا، فذلك مقصود.<br>وإذا بدا هاجسيًا، فذلك دقيق.",
+      listenTitle: "استمع",
+      embedNote: "الملف الفني على سبوتيفاي.",
+      discographyTitle: "أعمال مختارة",
+      discCurrentLabel: "الفم والفكّين",
+      discCurrentYear: "٢٠٢٦",
+      discPrev1: "الصوت",
+      discPrev1Year: "٢٠٢٥",
+      discPrev2: "السدّ ٨",
+      discPrev2Year: "٢٠٢٣",
+      footerTitle: "روابط",
+      footerStreaming: "استماع",
+      footerYouTube: "يوتيوب",
+      footerInstagram: "إنستغرام",
+      footerContact: "تواصل",
+      contactTitle: "تواصل",
+      contactEmailLabel: "إيميل",
+      contactMgmtLabel: "إدارة",
+      contactMobileLabel: "هاتف",
+      epkLabel: "EPK (.zip)"
+    };
 
     // Store original English from DOM once (prevents drift forever)
     const originalEN = {};
@@ -825,23 +811,19 @@ If this sounds controlled, it’s because losing control would be less interesti
       originalEN[key] = (mode === "html") ? el.innerHTML : el.textContent;
     });
 
-    function getBasePath(){
-      const p = window.location.pathname;
-      return p.replace(/\/ar\/?$/i, "/");
+    function setUrlForLang(targetLang){
+      // Always use hash routing to avoid 404s and keep assets stable
+      const hash = (targetLang === "ar") ? "#ar" : "";
+      try{
+        window.history.replaceState({}, "", window.location.pathname + window.location.search + hash);
+      }catch(_e){
+        window.location.hash = (targetLang === "ar") ? "#ar" : "";
+      }
     }
-function setUrlForLang(targetLang){
-  // Always use hash routing to avoid 404s and broken relative asset paths
-  const basePath = window.location.pathname.replace(/\/$/, "");
-  const base = basePath || "/";
 
-  const hash = (targetLang === "ar") ? "#ar" : "";
-  window.history.replaceState({}, "", base + window.location.search + hash);
-}
-
-function isUrlArabic(){
-  return (window.location.hash || "").toLowerCase() === "#ar";
-}
-
+    function isUrlArabic(){
+      return (window.location.hash || "").toLowerCase() === "#ar";
+    }
 
     // ---- EPK ZIP link switching (EN vs AR) ----
     function updateEPKLink(){
@@ -875,6 +857,8 @@ function isUrlArabic(){
 
       updateEPKLink();
       initPrintHeader();
+      // Keep carousel consistent when switching languages
+      updateHero();
     }
 
     function toggleLang(){
@@ -921,10 +905,11 @@ function isUrlArabic(){
     }
 
     // ===== Hero carousel =====
+    // IMPORTANT: use one consistent folder name (lowercase) to avoid case-sensitive deploy issues.
     const heroImages = [
-      "Images/Hero.webp",
-      "Images/Hero2.webp",
-      "Images/Hero3.webp"
+      "images/Hero.webp",
+      "images/Hero2.webp",
+      "images/Hero3.webp"
     ];
 
     const heroTrack = document.getElementById("heroTrack");
@@ -935,20 +920,28 @@ function isUrlArabic(){
       heroImages.forEach((src, idx) => {
         const slide = document.createElement("div");
         slide.className = "heroSlide" + (idx === 0 ? " isPrintFirst" : "");
+
         const img = document.createElement("img");
         img.src = src;
         img.alt = `Hero image ${idx + 1}`;
+        img.loading = (idx === 0) ? "eager" : "lazy";
+        img.decoding = "async";
+
+        // Debug helper (won't affect visuals)
+        img.addEventListener("error", () => {
+          console.error("[Hero image failed]", src, "Resolved URL:", new URL(src, window.location.href).href);
+        });
+
         slide.appendChild(img);
         heroTrack.appendChild(slide);
       });
       updateHero();
     }
 
- function updateHero(){
-  const dir = document.body.classList.contains("rtl") ? 1 : -1;
-  heroTrack.style.transform = `translateX(${dir * heroIndex * 100}%)`;
-}
-
+    function updateHero(){
+      // Always LTR track math to avoid RTL flex/direction bugs
+      heroTrack.style.transform = `translateX(${-heroIndex * 100}%)`;
+    }
 
     function prevHero(){
       heroIndex = (heroIndex - 1 + heroImages.length) % heroImages.length;
@@ -963,7 +956,7 @@ function isUrlArabic(){
     document.getElementById("heroPrev")?.addEventListener("click", prevHero);
     document.getElementById("heroNext")?.addEventListener("click", nextHero);
 
-    // Touch swipe
+    // Touch swipe (physical direction: swipe left => next, swipe right => prev)
     const heroMedia = document.getElementById("heroMedia");
     let startX = null;
 
