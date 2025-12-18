@@ -568,6 +568,20 @@
       .heroSlide{ display:none !important; }
       .heroSlide.isPrintFirst{ display:block !important; }
     }
+    /* ===== Mobile hero typography tuning ===== */
+@media (max-width: 600px){
+  .heroTitle h1{
+    font-size: 16px; /* down from clamp */
+    letter-spacing: 0.2px;
+  }
+
+  .heroTitle p{
+    font-size: 10px;
+    line-height: 1.45;
+    max-width: 100%;
+  }
+}
+
   </style>
 </head>
 
