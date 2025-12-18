@@ -826,22 +826,19 @@ If this sounds controlled, it’s because losing control would be less interesti
       const p = window.location.pathname;
       return p.replace(/\/ar\/?$/i, "/");
     }
+function setUrlForLang(targetLang){
+  // Always use hash routing to avoid 404s and broken relative asset paths
+  const basePath = window.location.pathname.replace(/\/$/, "");
+  const base = basePath || "/";
 
-    function setUrlForLang(targetLang){
-      const base = getBasePath();
-      const newPath = (targetLang === "ar") ? (base.replace(/\/$/,"") + "/ar") : base.replace(/\/$/,"");
-      try{
-        window.history.replaceState({}, "", newPath + window.location.search + window.location.hash);
-      }catch(_e){
-        window.location.hash = (targetLang === "ar") ? "#ar" : "";
-      }
-    }
+  const hash = (targetLang === "ar") ? "#ar" : "";
+  window.history.replaceState({}, "", base + window.location.search + hash);
+}
 
-    function isUrlArabic(){
-      const p = window.location.pathname.toLowerCase();
-      const h = window.location.hash.toLowerCase();
-      return p.endsWith("/ar") || p.endsWith("/ar/") || h === "#ar";
-    }
+function isUrlArabic(){
+  return (window.location.hash || "").toLowerCase() === "#ar";
+}
+
 
     // ---- EPK ZIP link switching (EN vs AR) ----
     function updateEPKLink(){
