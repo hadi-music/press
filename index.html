@@ -55,6 +55,17 @@
       padding-right: 18px;
       padding-left: 0;
     }
+/* Arabic hero title alignment */
+body.rtl .heroTitle{
+  text-align: right;
+  margin-left: auto;
+  margin-right: 0;
+}
+
+body.rtl .heroTitle h1,
+body.rtl .heroTitle p{
+  text-align: right;
+}
 
     a{ color:var(--accent); text-decoration:none; }
     a:hover{ text-decoration:underline; }
@@ -246,6 +257,12 @@
       color:rgba(0,0,0,0.7);
       max-width:65ch;
     }
+
+    /* Arabic hero title alignment */
+body.rtl .heroTitle{
+  text-align: right;
+  margin-left: auto;
+}
 
     /* Minimal white + / − on the right side */
     .heroControls{
@@ -989,8 +1006,26 @@ If this sounds controlled, it’s because losing control would be less interesti
       updateHero();
     }
 
-    document.getElementById("heroPrev")?.addEventListener("click", prevHero);
-    document.getElementById("heroNext")?.addEventListener("click", nextHero);
+const heroPrevBtn = document.getElementById("heroPrev");
+const heroNextBtn = document.getElementById("heroNext");
+
+function bindHeroControls(){
+  if (!heroPrevBtn || !heroNextBtn) return;
+
+  heroPrevBtn.onclick = null;
+  heroNextBtn.onclick = null;
+
+  if (document.body.classList.contains("rtl")){
+    // RTL: swap meanings
+    heroPrevBtn.onclick = nextHero; // − goes forward (right-to-left)
+    heroNextBtn.onclick = prevHero; // + goes backward
+  } else {
+    // LTR: normal
+    heroPrevBtn.onclick = prevHero;
+    heroNextBtn.onclick = nextHero;
+  }
+}
+
 
     // Touch swipe (physical direction: swipe left => next, swipe right => prev)
     const heroMedia = document.getElementById("heroMedia");
