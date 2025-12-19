@@ -613,6 +613,34 @@
     text-overflow: clip;
   }
 }
+/* ===== Mobile Arabic hero typography tuning ===== */
+@media (max-width: 600px){
+  body.rtl .heroTitle{
+    max-width: 96%;
+    text-align: right;
+  }
+
+  /* Arabic H1: one line */
+  body.rtl .heroTitle h1{
+    font-size: 16px;            /* match EN */
+    letter-spacing: 0;          /* Arabic hates spacing */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Arabic tagline: max 2 lines */
+  body.rtl .heroTitle p{
+    font-size: 10px;
+    line-height: 1.35;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: clip;
+  }
+}
 
     .genreRow{
       margin-top: 10px;
