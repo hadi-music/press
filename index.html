@@ -583,6 +583,35 @@
         max-width: 100%;
       }
     }
+    .genreRow{
+  margin-top: 10px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  align-items:center;
+}
+
+.genreTag{
+  border:1px solid rgba(0,0,0,0.18);
+  background: rgba(255,255,255,0.82);
+  padding:8px 10px;
+  border-radius:999px;
+  font-size:12px;
+  line-height:1;
+  color: rgba(0,0,0,0.78);
+  letter-spacing: 0.4px;
+  white-space: nowrap;
+}
+
+/* RTL spacing polish */
+body.rtl .genreRow{ justify-content:flex-end; }
+body.rtl .genreTag{ letter-spacing: 0.2px; }
+
+/* Mobile: slightly smaller so it stays clean */
+@media (max-width: 600px){
+  .genreTag{ font-size:11px; padding:7px 9px; }
+}
+
 
     /* FORCE mobile to be 1 column no matter what */
     @media (max-width: 900px){
@@ -633,6 +662,11 @@
           <div class="heroTitle">
             <h1 data-i18n="projectTitle">Al Fam Wal Fakkayn / 2026</h1>
             <p data-i18n="hook">An album about pressure, silence, and the moment speech becomes unavoidable</p>
+            <div class="genreRow">
+  <span class="genreTag" data-i18n="genreBroad">Alternative Hip-Hop</span>
+  <span class="genreTag" data-i18n="genreSub">Conceptual Arabic Rap</span>
+</div>
+
           </div>
         </div>
       </div>
@@ -778,6 +812,8 @@ If this sounds controlled, it’s because losing control would be less interesti
       tag: "صفحة صحفية • لبنان / عالمي",
       projectTitle: "الفم والفكّين / ٢٠٢٦",
       hook: "ألبوم عن الضغط، والصمت، واللحظة التي يفرض فيها الكلام نفسه",
+      genreBroad: "هيب هوب بديل",
+      genreSub: "راب عربي مفاهيمي",
       bioTitle: "نبذة عن الفنان",
       bioText: "هادي فنان ومنتج موسيقي من جنوب لبنان، يتميّز بإتقان عالٍ للغة العربية وبأسلوب خاص في موسيقى الراب. يعمل خارج منطق الإصدارات المتسارعة والأطر الموسيقية الجاهزة، وطوّر صوتًا يرتكز على البنية، واللغة، والانضباط الفني. رغم قلّة إصداراته، تحظى أعماله بمتابعة مستمرة داخل المشهد الموسيقي، ما رسّخ حضوره بين الفنانين أنفسهم. يُنظر إلى إصداره عام 2023 السدّ 8 كمرجع أساسي في المشهد البديل. إلى جانب أعماله المسجّلة، يُعرف هادي بعروضه الحيّة التي تنقل هذا النهج إلى حضور جسدي محسوب. يعمل حاليًا على تطوير مشروعه الفم والفكّين، الذي يوسّع ممارسته عبر الصوت واللغة والبنية البصرية",
       aboutTitle: "عن المشروع",
