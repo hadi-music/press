@@ -611,7 +611,22 @@
     @media (max-width: 600px){
       .genreTag{ font-size:11px; padding:7px 9px; }
     }
+    /* === Mobile: compact genre tags (single-line) === */
+@media (max-width: 600px){
+  .genreRow{
+    flex-wrap: nowrap;          /* keep on one line */
+    overflow-x: auto;           /* safety: no wrapping */
+    -webkit-overflow-scrolling: touch;
+    gap: 6px;
+  }
 
+  .genreTag{
+    font-size: 10px;
+    padding: 6px 8px;
+    line-height: 1;
+    white-space: nowrap;        /* force single line */
+  }
+}
     /* FORCE mobile to be 1 column no matter what */
     @media (max-width: 900px){
       .grid{ grid-template-columns: 1fr !important; }
