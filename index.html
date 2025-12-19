@@ -880,13 +880,20 @@ If this sounds controlled, it’s because losing control would be less interesti
       return (window.location.hash || "").toLowerCase() === "#ar";
     }
 
-    function updateEPKLink(){
-      const link = document.getElementById("epkDownload");
-      if (!link) return;
-      link.href = (lang === "ar")
-        ? "downloads/HADI_EPK_AR_2025.zip"
-        : "downloads/HADI_EPK_EN_2025.zip";
-    }
+function updateEPKLink(){
+  const link = document.getElementById("epkDownload");
+  if (!link) return;
+
+  // Google Drive direct download links (uc?export=download&id=...)
+  const EPK_AR = "https://drive.google.com/uc?export=download&id=1LNoYqyLW9e8_tjXQ7IYaFQA_jIdY4MoG";
+  const EPK_EN = "https://drive.google.com/uc?export=download&id=1p7YpKgNzPUEiSNIR-Nv_Fz0TqrrqOajn";
+
+  link.href = (lang === "ar") ? EPK_AR : EPK_EN;
+
+  // optional: better filename hint (works in some browsers, not all)
+  link.setAttribute("download", (lang === "ar") ? "HADI_EPK_AR_2026.zip" : "HADI_EPK_EN_2026.zip");
+}
+
 
     function applyLang(newLang, {syncUrl=true} = {}){
       lang = newLang;
