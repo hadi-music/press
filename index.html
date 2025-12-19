@@ -55,17 +55,17 @@
       padding-right: 18px;
       padding-left: 0;
     }
-/* Arabic hero title alignment */
-body.rtl .heroTitle{
-  text-align: right;
-  margin-left: auto;
-  margin-right: 0;
-}
 
-body.rtl .heroTitle h1,
-body.rtl .heroTitle p{
-  text-align: right;
-}
+    /* Arabic hero title alignment */
+    body.rtl .heroTitle{
+      text-align: right;
+      margin-left: auto;
+      margin-right: 0;
+    }
+    body.rtl .heroTitle h1,
+    body.rtl .heroTitle p{
+      text-align: right;
+    }
 
     a{ color:var(--accent); text-decoration:none; }
     a:hover{ text-decoration:underline; }
@@ -200,7 +200,7 @@ body.rtl .heroTitle p{
       display:flex;
       width:100%;
       transform: translateX(0);
-      transition: transform 720ms cubic-bezier(.22,.8,.22,1); /* slightly slower + ease */
+      transition: transform 720ms cubic-bezier(.22,.8,.22,1);
       will-change: transform;
       direction:ltr; /* IMPORTANT */
     }
@@ -257,12 +257,6 @@ body.rtl .heroTitle p{
       color:rgba(0,0,0,0.7);
       max-width:65ch;
     }
-
-    /* Arabic hero title alignment */
-body.rtl .heroTitle{
-  text-align: right;
-  margin-left: auto;
-}
 
     /* Minimal white + / − on the right side */
     .heroControls{
@@ -590,45 +584,33 @@ body.rtl .heroTitle{
 
     /* ===== Mobile hero typography tuning ===== */
     @media (max-width: 600px){
-      .heroTitle h1{
-        font-size: 16px;
-        letter-spacing: 0.2px;
-      }
-      .heroTitle p{
-        font-size: 10px;
-        line-height: 1.45;
-        max-width: 100%;
-      }
+      .heroTitle h1{ font-size: 16px; letter-spacing: 0.2px; }
+      .heroTitle p{ font-size: 10px; line-height: 1.45; max-width: 100%; }
     }
+
     .genreRow{
-  margin-top: 10px;
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-  align-items:center;
-}
-
-.genreTag{
-  border:1px solid rgba(0,0,0,0.18);
-  background: rgba(255,255,255,0.82);
-  padding:8px 10px;
-  border-radius:999px;
-  font-size:12px;
-  line-height:1;
-  color: rgba(0,0,0,0.78);
-  letter-spacing: 0.4px;
-  white-space: nowrap;
-}
-
-/* RTL spacing polish */
-body.rtl .genreRow{ justify-content:flex-end; }
-body.rtl .genreTag{ letter-spacing: 0.2px; }
-
-/* Mobile: slightly smaller so it stays clean */
-@media (max-width: 600px){
-  .genreTag{ font-size:11px; padding:7px 9px; }
-}
-
+      margin-top: 10px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      align-items:center;
+    }
+    .genreTag{
+      border:1px solid rgba(0,0,0,0.18);
+      background: rgba(255,255,255,0.82);
+      padding:8px 10px;
+      border-radius:999px;
+      font-size:12px;
+      line-height:1;
+      color: rgba(0,0,0,0.78);
+      letter-spacing: 0.4px;
+      white-space: nowrap;
+    }
+    body.rtl .genreRow{ justify-content:flex-end; }
+    body.rtl .genreTag{ letter-spacing: 0.2px; }
+    @media (max-width: 600px){
+      .genreTag{ font-size:11px; padding:7px 9px; }
+    }
 
     /* FORCE mobile to be 1 column no matter what */
     @media (max-width: 900px){
@@ -640,7 +622,6 @@ body.rtl .genreTag{ letter-spacing: 0.2px; }
 <body>
   <div class="wrap">
 
-    <!-- In-page print header (shows only in print/PDF, in your font) -->
     <div class="printHeader" aria-label="Print header">
       <div class="phLeft">
         <div class="phTitle" id="phTitle">Artist Press Page</div>
@@ -680,10 +661,9 @@ body.rtl .genreTag{ letter-spacing: 0.2px; }
             <h1 data-i18n="projectTitle">Al Fam Wal Fakkayn / 2026</h1>
             <p data-i18n="hook">An album about pressure, silence, and the moment speech becomes unavoidable</p>
             <div class="genreRow">
-  <span class="genreTag" data-i18n="genreBroad">Alternative Hip-Hop</span>
-  <span class="genreTag" data-i18n="genreSub">Conceptual Arabic Rap</span>
-</div>
-
+              <span class="genreTag" data-i18n="genreBroad">Alternative Hip-Hop</span>
+              <span class="genreTag" data-i18n="genreSub">Conceptual Arabic Rap</span>
+            </div>
           </div>
         </div>
       </div>
@@ -714,35 +694,12 @@ If this sounds controlled, it’s because losing control would be less interesti
       <aside class="card">
         <h2 data-i18n="listenTitle">Listen</h2>
 
-        <!-- WEB MODE: iframe -->
         <div class="embed noPdf">
-          <iframe
-            style="border-radius:12px"
+          <iframe style="border-radius:12px"
             src="https://open.spotify.com/embed/artist/06HzbOxNs2Wy8v9WDlUjC1"
             height="352"
-            loading="lazy">
-          </iframe>
+            loading="lazy"></iframe>
           <div class="embedNote" data-i18n="embedNote">Spotify artist profile.</div>
-        </div>
-
-        <!-- PDF MODE: printable links -->
-        <div class="pdfOnly pdfLinkBlock" aria-label="Printable links">
-          <div class="row">
-            <div class="k">Spotify</div>
-            <div class="v">open.spotify.com/artist/06HzbOxNs2Wy8v9WDlUjC1</div>
-          </div>
-          <div class="row">
-            <div class="k">YouTube</div>
-            <div class="v">youtube.com/@doctororgans</div>
-          </div>
-          <div class="row">
-            <div class="k">Instagram</div>
-            <div class="v">instagram.com/doctororgans</div>
-          </div>
-          <div class="row">
-            <div class="k">Contact</div>
-            <div class="v">hadi_mroueh@yahoo.com</div>
-          </div>
         </div>
 
         <div class="divider"></div>
@@ -754,29 +711,10 @@ If this sounds controlled, it’s because losing control would be less interesti
           <li><span data-i18n="discPrev2">Al Sadd 8</span> — <span data-i18n="discPrev2Year">2023</span></li>
         </ul>
 
-        <!-- Export PDFs + EPK ZIP -->
         <div class="pdfRow">
-          <button class="btnPdf" type="button" onclick="exportPDF('en')" aria-label="Export English PDF" title="Export English PDF (Save as PDF in dialog)">
-            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-              <path fill="currentColor"
-                d="M12.2 3.2c.6 0 1 .5.9 1.1-.4 2.2-1.2 4.5-2.3 6.6 1.7.6 3.4 1.3 5 2.2.6.3.7 1.1.3 1.6-.3.5-1 .7-1.6.4-1.6-.9-3.3-1.7-5.1-2.3-1.1 1.7-2.4 3.2-4 4.5-.5.4-1.2.3-1.6-.2-.4-.5-.3-1.2.2-1.6 1.4-1.1 2.6-2.5 3.6-4.0-1.4-.4-2.8-.6-4.3-.7-.6 0-1.1-.5-1.1-1.1s.5-1.1 1.1-1.1c1.8.1 3.5.4 5.1.9 1-2 1.7-4.1 2.1-6.2.1-.5.5-.9 1-.9z"/>
-            </svg>
-            <span>PDF (EN)</span>
-          </button>
-
-          <button class="btnPdf" type="button" onclick="exportPDF('ar')" aria-label="Export Arabic PDF" title="Export Arabic PDF (Save as PDF in dialog)">
-            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-              <path fill="currentColor"
-                d="M12.2 3.2c.6 0 1 .5.9 1.1-.4 2.2-1.2 4.5-2.3 6.6 1.7.6 3.4 1.3 5 2.2.6.3.7 1.1.3 1.6-.3.5-1 .7-1.6.4-1.6-.9-3.3-1.7-5.1-2.3-1.1 1.7-2.4 3.2-4 4.5-.5.4-1.2.3-1.6-.2-.4-.5-.3-1.2.2-1.6 1.4-1.1 2.6-2.5 3.6-4.0-1.4-.4-2.8-.6-4.3-.7-.6 0-1.1-.5-1.1-1.1s.5-1.1 1.1-1.1c1.8.1 3.5.4 5.1.9 1-2 1.7-4.1 2.1-6.2.1-.5.5-.9 1-.9z"/>
-            </svg>
-            <span>PDF (AR)</span>
-          </button>
-
+          <button class="btnPdf" type="button" onclick="exportPDF('en')"><span>PDF (EN)</span></button>
+          <button class="btnPdf" type="button" onclick="exportPDF('ar')"><span>PDF (AR)</span></button>
           <a class="btnPdf" id="epkDownload" href="downloads/HADI_EPK_EN_2025.zip" download>
-            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-              <path fill="currentColor" d="M12 3v10.2l3.6-3.6 1.4 1.4L12 17 7 11l1.4-1.4L12 13.2V3z"/>
-              <path fill="currentColor" d="M5 19h14v2H5z"/>
-            </svg>
             <span data-i18n="epkLabel">EPK (.zip)</span>
           </a>
         </div>
@@ -795,7 +733,6 @@ If this sounds controlled, it’s because losing control would be less interesti
 
   </div>
 
-  <!-- Contact Modal -->
   <div class="modalBackdrop" id="contactModal" role="dialog" aria-modal="true" aria-label="Contact">
     <div class="modal">
       <div class="modalTop">
@@ -823,7 +760,6 @@ If this sounds controlled, it’s because losing control would be less interesti
   <script>
     let lang = "en";
 
-    // Arabic overrides ONLY
     const ar = {
       artistName: "هادي",
       tag: "صفحة صحفية • لبنان / عالمي",
@@ -832,9 +768,9 @@ If this sounds controlled, it’s because losing control would be less interesti
       genreBroad: "هيب هوب بديل",
       genreSub: "راب عربي مفاهيمي",
       bioTitle: "نبذة عن الفنان",
-      bioText: "هادي فنان ومنتج موسيقي من جنوب لبنان، يتميّز بإتقان عالٍ للغة العربية وبأسلوب خاص في موسيقى الراب. يعمل خارج منطق الإصدارات المتسارعة والأطر الموسيقية الجاهزة، وطوّر صوتًا يرتكز على البنية، واللغة، والانضباط الفني. رغم قلّة إصداراته، تحظى أعماله بمتابعة مستمرة داخل المشهد الموسيقي، ما رسّخ حضوره بين الفنانين أنفسهم. يُنظر إلى إصداره عام 2023 السدّ 8 كمرجع أساسي في المشهد البديل. إلى جانب أعماله المسجّلة، يُعرف هادي بعروضه الحيّة التي تنقل هذا النهج إلى حضور جسدي محسوب. يعمل حاليًا على تطوير مشروعه الفم والفكّين، الذي يوسّع ممارسته عبر الصوت واللغة والبنية البصرية",
+      bioText: "هادي فنان ومنتج موسيقي من جنوب لبنان...",
       aboutTitle: "عن المشروع",
-      aboutText: "الفم والفكّين ألبوم راب عربي ينطلق من بنية الفكّ لقراءة الحرب عبر الصوت. يعتمد العمل على البنية والتكرار والانضباط، ويقوم على توتّر أساسي بين الصوت والبنية. يظهر الفكّ هنا كآلية لا كاستعارة — آلية للنطق، والضغط، والضبط. تُعامل اللغة هنا لا كمساحة تعبير، بل كفعل جسدي، كعمل يُؤدَّى تحت شروط لم يخترها الجسد.<br><br>بدل أن يكون مجموعة أغانٍ منفصلة، يعمل الألبوم كنظام متكامل، حيث يُستخدم الضغط والتكرار كطريقة عمل. يختبر كل مسار مقدار التحوّل الذي يمكن للمعنى احتماله قبل أن يبدأ بفقدان تماسكه.<br><br>هادي لا يسعى للاندماج في المشهد العربي.<br>بل يسعى إلى تغيير طريقة عمله.<br>إذا بدا العمل منضبطًا، فذلك مقصود.<br>وإذا بدا هاجسيًا، فذلك دقيق.",
+      aboutText: "الفم والفكّين ألبوم راب عربي...",
       listenTitle: "استمع",
       embedNote: "الملف الفني على سبوتيفاي.",
       discographyTitle: "أعمال مختارة",
@@ -856,7 +792,6 @@ If this sounds controlled, it’s because losing control would be less interesti
       epkLabel: "EPK (.zip)"
     };
 
-    // Store original English from DOM once (prevents drift forever)
     const originalEN = {};
     document.querySelectorAll("[data-i18n]").forEach(el => {
       const key = el.getAttribute("data-i18n");
@@ -865,7 +800,6 @@ If this sounds controlled, it’s because losing control would be less interesti
     });
 
     function setUrlForLang(targetLang){
-      // Always use hash routing to avoid 404s and keep assets stable
       const hash = (targetLang === "ar") ? "#ar" : "";
       try{
         window.history.replaceState({}, "", window.location.pathname + window.location.search + hash);
@@ -878,7 +812,6 @@ If this sounds controlled, it’s because losing control would be less interesti
       return (window.location.hash || "").toLowerCase() === "#ar";
     }
 
-    // ---- EPK ZIP link switching (EN vs AR) ----
     function updateEPKLink(){
       const link = document.getElementById("epkDownload");
       if (!link) return;
@@ -910,8 +843,8 @@ If this sounds controlled, it’s because losing control would be less interesti
 
       updateEPKLink();
       initPrintHeader();
-      // Keep carousel consistent when switching languages
-      updateHero();
+      bindHeroControls();   // ✅ IMPORTANT
+      updateHero();         // ✅ keep current index visually correct
     }
 
     function toggleLang(){
@@ -924,16 +857,9 @@ If this sounds controlled, it’s because losing control would be less interesti
         return;
       }
       const navLang = (navigator.language || "").toLowerCase();
-      if (navLang.startsWith("ar")){
-        applyLang("ar", {syncUrl:true});
-      } else {
-        applyLang("en", {syncUrl:false});
-      }
+      if (navLang.startsWith("ar")) applyLang("ar", {syncUrl:true});
+      else applyLang("en", {syncUrl:false});
     }
-
-    window.addEventListener("popstate", () => {
-      applyLang(isUrlArabic() ? "ar" : "en", {syncUrl:false});
-    });
 
     // ===== Print header content (date/time/url) =====
     function initPrintHeader(){
@@ -958,7 +884,6 @@ If this sounds controlled, it’s because losing control would be less interesti
     }
 
     // ===== Hero carousel =====
-    // IMPORTANT: use one consistent folder name (lowercase) to avoid case-sensitive deploy issues.
     const heroImages = [
       "Images/Hero.jpg",
       "Images/Hero2.jpg",
@@ -973,18 +898,11 @@ If this sounds controlled, it’s because losing control would be less interesti
       heroImages.forEach((src, idx) => {
         const slide = document.createElement("div");
         slide.className = "heroSlide" + (idx === 0 ? " isPrintFirst" : "");
-
         const img = document.createElement("img");
         img.src = src;
         img.alt = `Hero image ${idx + 1}`;
         img.loading = (idx === 0) ? "eager" : "lazy";
         img.decoding = "async";
-
-        // Debug helper (won't affect visuals)
-        img.addEventListener("error", () => {
-          console.error("[Hero image failed]", src, "Resolved URL:", new URL(src, window.location.href).href);
-        });
-
         slide.appendChild(img);
         heroTrack.appendChild(slide);
       });
@@ -992,7 +910,6 @@ If this sounds controlled, it’s because losing control would be less interesti
     }
 
     function updateHero(){
-      // Always LTR track math to avoid RTL flex/direction bugs
       heroTrack.style.transform = `translateX(${-heroIndex * 100}%)`;
     }
 
@@ -1006,28 +923,38 @@ If this sounds controlled, it’s because losing control would be less interesti
       updateHero();
     }
 
-const heroPrevBtn = document.getElementById("heroPrev");
-const heroNextBtn = document.getElementById("heroNext");
+    // ✅ RTL: swap BOTH meaning + visible symbols
+    const heroPrevBtn = document.getElementById("heroPrev");
+    const heroNextBtn = document.getElementById("heroNext");
 
-function bindHeroControls(){
-  if (!heroPrevBtn || !heroNextBtn) return;
+    function bindHeroControls(){
+      if (!heroPrevBtn || !heroNextBtn) return;
 
-  heroPrevBtn.onclick = null;
-  heroNextBtn.onclick = null;
+      const rtl = document.body.classList.contains("rtl");
 
-  if (document.body.classList.contains("rtl")){
-    // RTL: swap meanings
-    heroPrevBtn.onclick = nextHero; // − goes forward (right-to-left)
-    heroNextBtn.onclick = prevHero; // + goes backward
-  } else {
-    // LTR: normal
-    heroPrevBtn.onclick = prevHero;
-    heroNextBtn.onclick = nextHero;
-  }
-}
+      // clear handlers
+      heroPrevBtn.onclick = null;
+      heroNextBtn.onclick = null;
 
+      if (rtl){
+        // Swap the displayed symbols (your request)
+        heroPrevBtn.textContent = "+";
+        heroNextBtn.textContent = "−";
 
-    // Touch swipe (physical direction: swipe left => next, swipe right => prev)
+        // Swap what they do (feels right in RTL)
+        heroPrevBtn.onclick = nextHero;
+        heroNextBtn.onclick = prevHero;
+      } else {
+        // Normal
+        heroPrevBtn.textContent = "−";
+        heroNextBtn.textContent = "+";
+
+        heroPrevBtn.onclick = prevHero;
+        heroNextBtn.onclick = nextHero;
+      }
+    }
+
+    // Touch swipe (physical direction stays intuitive)
     const heroMedia = document.getElementById("heroMedia");
     let startX = null;
 
@@ -1100,6 +1027,7 @@ function bindHeroControls(){
     initLanguage();
     initPrintHeader();
     updateEPKLink();
+    bindHeroControls(); // ✅ IMPORTANT: bind once on initial load
   </script>
 </body>
 </html>
