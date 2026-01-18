@@ -445,6 +445,21 @@
       font-family: inherit;
       color: var(--accent);
     }
+    /* Private SoundCloud link */
+.pillPrivate{
+  background: #ff6a00;
+  border: 1px solid #ff6a00;
+  color: #fff;
+  box-shadow: 0 12px 28px rgba(255,106,0,0.35);
+  font-weight: 600;
+}
+
+.pillPrivate:hover{
+  background: #e85f00;
+  border-color: #e85f00;
+  text-decoration: none;
+}
+
 
     body.rtl .footer{ text-align:right; }
 
@@ -802,12 +817,23 @@ If it sounds controlled, it’s because losing control would be less interesting
 
     <footer class="footer" aria-label="Footer links">
       <p class="footerTitle" data-i18n="footerTitle">Links</p>
-      <div class="footerLinks">
-        <a class="pill" href="https://open.spotify.com/artist/06HzbOxNs2Wy8v9WDlUjC1?si=hWgJXSlBS0K7MvMQ2Kl4Tw" target="_blank" rel="noopener" data-i18n="footerStreaming">Streaming</a>
-        <a class="pill" href="https://www.youtube.com/@doctororgans" target="_blank" rel="noopener" data-i18n="footerYouTube">YouTube</a>
-        <a class="pill" href="https://www.instagram.com/doctororgans/" target="_blank" rel="noopener" data-i18n="footerInstagram">Instagram</a>
-        <button class="pillBtn" type="button" onclick="openContact()" data-i18n="footerContact">Contact</button>
-      </div>
+<div class="footerLinks">
+  <a class="pill" href="https://open.spotify.com/artist/06HzbOxNs2Wy8v9WDlUjC1?si=hWgJXSlBS0K7MvMQ2Kl4Tw" target="_blank" rel="noopener" data-i18n="footerStreaming">Streaming</a>
+
+  <a class="pill" href="https://www.youtube.com/@doctororgans" target="_blank" rel="noopener" data-i18n="footerYouTube">YouTube</a>
+
+  <a class="pill" href="https://www.instagram.com/doctororgans/" target="_blank" rel="noopener" data-i18n="footerInstagram">Instagram</a>
+
+  <a class="pill pillPrivate"
+     href="https://on.soundcloud.com/Cng7pa6TPbGbeVpKqC"
+     target="_blank"
+     rel="noopener">
+     Private Album Link
+  </a>
+
+  <button class="pillBtn" type="button" onclick="openContact()" data-i18n="footerContact">Contact</button>
+</div>
+
     </footer>
 
   </div>
